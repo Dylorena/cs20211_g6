@@ -1,0 +1,34 @@
+ .App{
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+.image {
+  width: 50vw;
+  height: 88vh;
+}
+
+.image img {
+  width: 50vw;
+  height: 100%;
+}
+
+.main {
+  display: flex;
+  background: #dddddd;
+  height: 88vh;
+}
+
+.main .content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50vw;
+}
+
+.footer-app {
+  background: #dddddd;
+  width: 100vw;
+  text-align: center;
+  padding: 0.1rem;
+}
