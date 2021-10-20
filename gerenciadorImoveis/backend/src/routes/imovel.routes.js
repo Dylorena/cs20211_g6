@@ -5,9 +5,13 @@ router.post('/criarusuario', imoveisController.criarUsuario);
 
 router.get('/imoveis', imoveisController.listarTodosImoveis);
 
+router.get('/corretores', imoveisController.listarTodosCorretores);
+
+router.get('/clientes', imoveisController.listarTodosClientes);
+
 router.get('/statusimoveis', imoveisController.listarTodosStatusImoveis);
 
-router.delete('/deletarimovel', imoveisController.deletarImovelPorId);
+router.post('/deletarimovel', imoveisController.deletarImovelPorId);
 
 router.post('/criarAluguel', imoveisController.criarAluguel);
 
