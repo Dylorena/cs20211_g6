@@ -1,4 +1,4 @@
- .App{
+.App {
   max-width: 100vw;
   max-height: 100vh;
 }
@@ -17,13 +17,14 @@
   display: flex;
   background: #dddddd;
   height: 88vh;
-}
 
-.main .content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50vw;
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 50vw;
+  }
 }
 
 .footer-app {

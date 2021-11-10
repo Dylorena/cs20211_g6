@@ -1,37 +1,40 @@
-import NovoUsuario from './views/novoUsuario';
+import NovoUsuario from './views/novoUsuario/novoUsuario';
 import 'react-toastify/dist/ReactToastify.css';
-import { Button } from 'reactstrap';
-import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import './App.css';
-import background from './key-2114455_1920.jpg'
+import './App.scss';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import MenuImoveis from './views/menu/menu';
+import ListarImoveis from './views/listarimoveis/listarImoveis';
+import CriarAluguel from './views/aluguel/criaraluguel';
 
 function App() {
-  const [showNovoUsuario, setshowNovoUsuario] = useState(false);
+
+  window.onunload = () => {
+    sessionStorage.clear();
+  }
 
   return (
+
     <div className="App" >
       <ToastContainer position="top-center" autoClose={8000} />
       <header className="">
         <h2>CS Imóveis</h2>
       </header>
       <div className="main">
-        <div className="image d-none d-sm-none d-md-block">
-          <img src={background} alt="" />
-        </div>
-        <main className="content">
-          {!showNovoUsuario ? (
-            <Button type="button" className="btn" onClick={() => setshowNovoUsuario(true)}>Novo usuário</Button>
-          ) : (
-            <NovoUsuario toggleForm={setshowNovoUsuario} />
-          )}
-
-        </main>
+        <BrowserRouter>
+          <Switch>
+            <Route path="/" exact component={MenuImoveis} />
+            <Route path="/novousuario" component={NovoUsuario} />
+            <Route path="/listarimoveis" component={ListarImoveis} />
+            <Route path="/criaraluguel" render={(props) => <CriarAluguel {...props} />} />
+          </Switch>
+        </BrowserRouter>
       </div>
       <footer className="footer-app">
         <p>Desenvolvido por CS Imóveis</p>
       </footer>
     </div>
+
   );
 }
 

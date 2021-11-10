@@ -1,7 +1,6 @@
 const router = require('express-promise-router')();
 const imoveisController = require('../controllers/imovel.controller');
-
-router.post('/criarusuario', imoveisController.criarUsuario);
+const usuarioController = require('../controllers/usuario.controller');
 
 router.get('/imoveis', imoveisController.listarTodosImoveis);
 
@@ -16,5 +15,9 @@ router.post('/deletarimovel', imoveisController.deletarImovelPorId);
 router.post('/criarAluguel', imoveisController.criarAluguel);
 
 router.post('/alterarStatusImovel', imoveisController.alterarStatusImovel);
+
+router.post('/login', usuarioController.login);
+
+router.post('/criarusuario', usuarioController.criarUsuario);
 
 module.exports = router;

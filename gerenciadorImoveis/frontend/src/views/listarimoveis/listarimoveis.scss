@@ -1,0 +1,25 @@
+.Card-imoveis{
+  
+  padding: 1.5rem;
+  overflow-y: auto;
+
+  .card{
+    height: 310px;
+  }
+
+  & > .card-body{
+    display: flex;
+    flex-direction: row !important;
+  }
+
+  .card + .card{
+    margin-left: 1rem;
+  }
+
+  .card-img {
+    width: 100%;
+    img{
+      width: 100px;
+    }
+  }
+}

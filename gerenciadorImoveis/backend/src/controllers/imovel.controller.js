@@ -1,52 +1,5 @@
 const db = require('../config/database');
 
-exports.criarUsuario = async (req, res) => {
-  const { cpf, perfil, email, endereco, nome } = req.body;
-  let Success = true;
-  let Mensagem = [];
-
-  if (cpf === '') {
-    Mensagem.push('CPF é obrigatório!');
-    Success = false;
-  };
-
-  if (perfil.length === 0) {
-    Mensagem.push('Perfil é obrigatório!');
-    Success = false;
-  };
-
-  if (Success) {
-    const validation = await db.query(`select cpfUsuario from usuario where cpfUsuario = '${cpf}'`);
-
-    if (validation.rowCount === 0) {
-      try {
-        let response = await db.query(
-          `INSERT INTO 
-          usuario (cpfUsuario, nome, tipoUsuario, email, endereco) 
-          VALUES ($1, $2, $3, $4, $5)`, [cpf, nome, perfil.toString(), email, endereco],
-        );
-
-        console.log(response);
-
-        Mensagem.push('Usuário cadastrado com sucesso!');
-      } catch (error) {
-        console.log(error);
-        Mensagem.push('Erro ao inserir usuário, contate o suporte ou tente mais tarde.');
-        Success = false;
-      }
-
-    } else {
-      Mensagem.push('Não é permitido cadastrar usuário duplicado. Verifique!');
-      Success = false;
-    }
-  }
-
-  res.status(201).send({
-    Mensagem,
-    Success,
-  });
-};
-
 exports.listarTodosImoveis = async (req, res) => {
   const Data = await db.query(
     `select 
@@ -73,8 +26,9 @@ exports.listarTodosClientes = async (req, res) => {
     `select 
       u.id, 
       u.nome
-    from usuario u 
-     where tipousuario = 2`,
+    from usuario u
+      inner join usuariotipo ut on u.id = ut.idusuario
+    where idtipousuario = 2`,
   );
 
   const objReturn = {
@@ -90,8 +44,9 @@ exports.listarTodosCorretores = async (req, res) => {
     `select 
       u.id, 
       u.nome
-    from usuario u 
-     where tipousuario = 3`,
+    from usuario u
+      inner join usuariotipo ut on u.id = ut.idusuario
+    where idtipousuario = 2`,
   );
 
   const objReturn = {
@@ -104,7 +59,7 @@ exports.listarTodosCorretores = async (req, res) => {
 
 exports.listarTodosStatusImoveis = async (req, res) => {
   const response = await db.query('select * from statusImovel');
-  res.status(200).send(response.rows);
+  res.status(200).send(response);
 };
 
 exports.deletarImovelPorId = async (req, res) => {
@@ -112,7 +67,7 @@ exports.deletarImovelPorId = async (req, res) => {
   let Success = true;
   let Message = [];
 
-  const validacaoTipoUsuario = await db.query(`select id from usuario where id = $1 and tipoUsuario = 1`, [idUser]);
+  const validacaoTipoUsuario = await db.query(`select idusuario from usuariotipo where idusuario = $1 and idtipousuario = 1`, [idUser]);
   const validacaoImovelExistente = await db.query(`select id from imovel where id = $1 `, [idImovel]);
 
   if (validacaoImovelExistente.rowCount === 0) {
